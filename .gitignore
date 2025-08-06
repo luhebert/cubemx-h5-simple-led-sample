@@ -1,0 +1,53 @@
+# Directories to Ignore
+build/
+.vs/
+# TODO: add generated proto file directory here
+
+# File Extensions to Ignore
+# Protobuf Message Files
+#*.pb.c
+#*.pb.h
+
+# Prerequisites
+*.d
+
+# Object Files
+*.o
+*.ko
+*.obj
+*.slo
+*.lo
+
+# Linker Output
+*.ilk
+*.map
+*.exp
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Libraries (Static Compiled)
+*.lib
+*.a
+*.la
+*.lai
+*.lo
+
+# Executables
+*.exe
+*.out
+*.app
+*.hex
+
+# Shared objects and Compiled Dynamic Libararies
+*.dll
+*.so
+*.so.*
+*.dylib
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
