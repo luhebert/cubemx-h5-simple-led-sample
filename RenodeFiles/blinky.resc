@@ -1,0 +1,36 @@
+logFile "C:\Users\HEL1OWT\Dev\Renode\blinky-renode.log" True
+
+$name?="nucleo_h563zi"
+$bin?="PATH_TO_ELF_HERE\H5-LED-Sample.elf"
+$repl?=PATH_TO_BLINKY_HERE/blinky.repl
+
+
+using sysbus
+mach create $name
+
+machine LoadPlatformDescription $repl
+
+
+showAnalyzer usart3
+
+:usart3 RecordToAsciinema $ORIGIN/blinky-asciinema
+set osPanicHook
+"""
+self.ErrorLog("Starting from reset handler address")
+"""
+:cpu0 AddSymbolHook "z_fatal_error" $osPanicHook
+
+
+macro reset
+"""
+    sysbus LoadELF $bin
+
+    :cpu0 VectorTableOffset `sysbus GetSymbolAddress "_vector_table"`
+
+    :cpu0 AddHook `sysbus GetSymbolAddress "Reset_Handler"` $osPanicHook
+
+    :cpu0 EnableZephyrMode
+    :cpu0 EnableProfilerCollapsedStack $ORIGIN/blinky-profile true 62914560 maximumNestedContexts=10
+"""
+
+runMacro $reset
